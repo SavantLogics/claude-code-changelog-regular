@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♨️ Claude Code Changelog - Geocities Style ♨️</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+            background: #000080 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="%23000080"/><circle cx="10" cy="10" r="2" fill="%23ff00ff"/><circle cx="30" cy="10" r="2" fill="%2300ffff"/><circle cx="10" cy="30" r="2" fill="%23ffff00"/><circle cx="30" cy="30" r="2" fill="%23ff0000"/></svg>');
+            min-height: 100vh;
+            color: #00ff00;
+            overflow-x: auto;
+            animation: backgroundPulse 3s infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% { background-color: #000080; }
+            100% { background-color: #2e0057; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            16% { color: #ff8000; }
+            33% { color: #ffff00; }
+            50% { color: #00ff00; }
+            66% { color: #0080ff; }
+            83% { color: #8000ff; }
+            100% { color: #ff0000; }
+        }
+
+        @keyframes marqueeLeft {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 10px;
+            border: 5px solid #ff00ff;
+            margin-top: 10px;
+            background: linear-gradient(45deg, #ff00ff 0%, #00ffff 25%, #ffff00 50%, #ff0000 75%, #ff00ff 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header {
+            text-align: center;
+            background: #ff0000;
+            border: 3px ridge #ffff00;
+            margin-bottom: 20px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦ ★ ✦";
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 100%;
+            animation: marqueeLeft 15s linear infinite;
+            color: #ffff00;
+            font-size: 14px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0 #000000, -1px -1px 0 #ffffff;
+            animation: rainbow 2s linear infinite;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #000000;
+            animation: blink 1.5s infinite;
+            font-weight: bold;
+        }
+
+        .marquee-container {
+            background: #ffff00;
+            border: 2px solid #ff0000;
+            margin-bottom: 15px;
+            overflow: hidden;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .marquee-text {
+            animation: marqueeLeft 20s linear infinite;
+            white-space: nowrap;
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .search-filter {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: 5px outset #ffffff;
+            padding: 15px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-filter::before {
+            content: "🔍 SEARCH THE MATRIX 🔍";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff0000;
+            color: #ffff00;
+            padding: 5px 15px;
+            border: 2px solid #000000;
+            font-weight: bold;
+            animation: bounce 2s infinite;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 3px inset #cccccc;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            background: #000000;
+            color: #00ff00;
+            margin-top: 20px;
+        }
+
+        .search-input:focus {
+            outline: 3px solid #ff00ff;
+            background: #001100;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 12px;
+            border: 3px outset #cccccc;
+            background: linear-gradient(45deg, #ff0000, #ffff00);
+            color: #000000;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive;
+            text-transform: uppercase;
+            animation: bounce 3s infinite;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            border: 3px inset #cccccc;
+            animation: rainbow 1s linear infinite;
+        }
+
+        .changelog-timeline {
+            position: relative;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="%23ff00ff" opacity="0.1"/><path d="M0 0L20 20M20 0L0 20" stroke="%23ffff00" stroke-width="1" opacity="0.3"/></svg>');
+        }
+
+        .changelog-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: repeating-linear-gradient(
+                45deg,
+                #ff0000,
+                #ff0000 5px,
+                #ffff00 5px,
+                #ffff00 10px,
+                #00ff00 10px,
+                #00ff00 15px,
+                #00ffff 15px,
+                #00ffff 20px
+            );
+            animation: gradientShift 2s linear infinite;
+        }
+
+        .version-card {
+            background: linear-gradient(135deg, #ff00ff 0%, #ffff00 25%, #00ffff 50%, #ff0000 75%, #00ff00 100%);
+            border: 5px ridge #ffffff;
+            margin-left: 70px;
+            margin-bottom: 25px;
+            padding: 20px;
+            position: relative;
+            animation: bounce 4s infinite;
+            box-shadow: 5px 5px 0 #000000, 10px 10px 0 #ff00ff;
+        }
+
+        .version-card:hover {
+            animation: rainbow 0.5s linear infinite, bounce 0.3s infinite;
+            transform: scale(1.02);
+        }
+
+        .version-card::before {
+            content: '★';
+            position: absolute;
+            left: -55px;
+            top: 30px;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #ffff00, #ff0000);
+            border: 3px solid #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            animation: rainbow 1s linear infinite;
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: #000000;
+            padding: 10px;
+            border: 2px solid #ffffff;
+        }
+
+        .version-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 2px 2px 0 #ff0000, 4px 4px 0 #ffff00;
+            font-family: 'Courier New', monospace;
+            animation: blink 2s infinite;
+        }
+
+        .version-date {
+            color: #ffff00;
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #000000;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 2px solid #000000;
+            animation: bounce 2s infinite;
+            text-transform: uppercase;
+        }
+
+        .status-ga {
+            background: linear-gradient(45deg, #00ff00, #ffff00);
+            color: #000000;
+            text-shadow: none;
+        }
+
+        .status-preview {
+            background: linear-gradient(45deg, #ff8000, #ff0000);
+            color: #ffffff;
+            text-shadow: 1px 1px 0 #000000;
+        }
+
+        .feature-section {
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border: 2px dashed #ffffff;
+        }
+
+        .feature-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffff00;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 0 #ff0000;
+            text-transform: uppercase;
+            animation: rainbow 3s linear infinite;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-item {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            border: 2px solid #ffff00;
+            color: #000000;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: "➤";
+            color: #ff0000;
+            font-weight: bold;
+            margin-right: 5px;
+            animation: blink 1s infinite;
+        }
+
+        .feature-item:hover {
+            background: linear-gradient(90deg, #ffff00, #ff0000);
+            animation: bounce 0.5s infinite;
+        }
+
+        .feature-item strong {
+            color: #ff0000;
+            text-shadow: 1px 1px 0 #ffffff;
+        }
+
+        .expand-btn {
+            background: linear-gradient(45deg, #ff0000, #ff8000);
+            color: #ffffff;
+            border: 3px outset #ffffff;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        .expand-btn:hover {
+            background: linear-gradient(45deg, #00ff00, #00ffff);
+            color: #000000;
+            border: 3px inset #ffffff;
+            animation: rainbow 0.5s linear infinite;
+        }
+
+        .collapsed {
+            max-height: 150px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .collapsed::after {
+            content: '▼ MORE BELOW ▼';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(transparent, #ff00ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff00;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: radial-gradient(circle, #ff00ff, #000080);
+            padding: 20px;
+            border: 5px ridge #ffff00;
+            text-align: center;
+            position: relative;
+            animation: bounce 3s infinite;
+        }
+
+        .stat-card::before {
+            content: "✨";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 20px;
+            animation: rainbow 1s linear infinite;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffff00;
+            text-shadow: 3px 3px 0 #ff0000, -1px -1px 0 #000000;
+            font-family: 'Courier New', monospace;
+            animation: blink 2s infinite;
+        }
+
+        .stat-label {
+            color: #ffffff;
+            margin-top: 5px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #000000;
+            text-transform: uppercase;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: radial-gradient(circle, #ff0000, #ff8000);
+            color: #ffffff;
+            border: 3px solid #ffff00;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+            font-weight: bold;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: radial-gradient(circle, #00ff00, #00ffff);
+            color: #000000;
+            animation: rainbow 0.5s linear infinite, bounce 0.3s infinite;
+        }
+
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #000000;
+            color: #00ff00;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            animation: blink 3s infinite;
+        }
+
+        .construction-gif {
+            display: inline-block;
+            font-size: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        /* Responsive design for mobile */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .changelog-timeline::before {
+                left: 15px;
+            }
+            
+            .version-card {
+                margin-left: 40px;
+            }
+            
+            .version-card::before {
+                left: -32px;
+            }
+            
+            .version-header {
+                flex-direction: column;
+            }
+
+            .container {
+                max-width: 98%;
+                margin: 5px auto;
+            }
+        }
+
+        /* Blinking text animation */
+        .blink-fast {
+            animation: blink 0.5s infinite;
+        }
+
+        /* Add some 90s web ring styling */
+        .webring {
+            background: #ffff00;
+            border: 3px solid #ff0000;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="visitor-counter">
+        👁️ VISITORS: <span id="visitorCount">001337</span>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-code"></i> <span class="construction-gif">🚧</span> CLAUDE CODE CHANGELOG <span class="construction-gif">🚧</span></h1>
+            <p>** WELCOME TO THE MATRIX OF CODE UPDATES **</p>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-text">
+                ★★★ TRACK ALL THE RADICAL UPDATES TO ANTHROPIC'S TOTALLY AWESOME COMMAND LINE CODING TOOL ★★★ 
+                NOW WITH 100% MORE CYBERSPACE! ★★★ GEOCITIES FOREVER! ★★★
+            </div>
+        </div>
+
+        <div class="webring">
+            <span class="blink-fast">♨️ HOT ♨️</span> You are visitor #<span id="visitorCount2">1337</span> to this RADICAL changelog! 
+            <span class="blink-fast">♨️ WICKED ♨️</span>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVersions">0</div>
+                <div class="stat-label">Total Versions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalFeatures">0</div>
+                <div class="stat-label">Features Added</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="latestVersion">v1.0.27</div>
+                <div class="stat-label">Latest Version</div>
+            </div>
+        </div>
+
+        <div class="search-filter">
+            <input type="text" class="search-input" id="searchInput" placeholder="ENTER SEARCH QUERY TO HACK THE MATRIX...">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">ALL VERSIONS</button>
+                <button class="filter-btn" data-filter="major">MAJOR FEATURES</button>
+                <button class="filter-btn" data-filter="technical">TECHNICAL</button>
+                <button class="filter-btn" data-filter="security">SECURITY</button>
+                <button class="filter-btn" data-filter="latest">LATEST ONLY</button>
+            </div>
+        </div>
+
+        <div class="changelog-timeline" id="changelogTimeline">
+            
+            <!-- Version 1.0.27 -->
+            <div class="version-card" data-version="1.0.27" data-tags="major technical security latest">
+                <div class="version-header">
+                    <div>
+                        <div class="version-number">v1.0.27</div>
+                        <div class="version-date">June 2025</div>
+                    </div>
+                    <div class="status-badge status-ga">Generally Available</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-rocket"></i>
+                        MAJOR FEATURES
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Sonnet 4 & Opus 4 Models:</strong> Access to the latest Claude models for enhanced coding capabilities</li>
+                        <li class="feature-item"><strong>Claude Pro & Max Integration:</strong> Full support for Pro and Max subscription plans</li>
+                        <li class="feature-item"><strong>SDK Release:</strong> TypeScript and Python SDKs now available for developers</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-cogs"></i>
+                        CORE FEATURES
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Todo List Management:</strong> Claude can create and track todo lists during complex tasks</li>
+                        <li class="feature-item"><strong>Conversation Resumption:</strong> Resume previous coding sessions seamlessly</li>
+                        <li class="feature-item"><strong>Web Search Integration:</strong> Search the web for documentation and solutions</li>
+                        <li class="feature-item"><strong>Image Support:</strong> Paste and drag images directly into conversations</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section collapsed" id="section-1027">
+                    <div class="feature-title">
+                        <i class="fas fa-wrench"></i>
+                        TECHNICAL IMPROVEMENTS
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>MCP Server Enhancements:</strong> SSE and HTTP transport support with real-time communication</li>
+                        <li class="feature-item"><strong>OAuth 2.0 Authentication:</strong> Enhanced security via /mcp command</li>
+                        <li class="feature-item"><strong>Performance Optimizations:</strong> Faster startup times and improved responsiveness</li>
+                        <li class="feature-item"><strong>Enhanced Error Handling:</strong> More robust error detection and recovery</li>
+                    </ul>
+                </div>
+                <button class="expand-btn" onclick="toggleSection('section-1027', this)">SHOW MORE</button>
+            </div>
+
+            <!-- Version 1.0.0 -->
+            <div class="version-card" data-version="1.0.0" data-tags="major technical security">
+                <div class="version-header">
+                    <div>
+                        <div class="version-number">v1.0.0</div>
+                        <div class="version-date">June 11, 2025</div>
+                    </div>
+                    <div class="status-badge status-ga">GA LAUNCH</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-flag"></i>
+                        MILESTONE RELEASE
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Official GA Release:</strong> Transition from research preview to generally available</li>
+                        <li class="feature-item"><strong>SDK Launch:</strong> TypeScript and Python SDKs for developers</li>
+                        <li class="feature-item"><strong>Enterprise Ready:</strong> Production-ready stability and support</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-shield-alt"></i>
+                        AUTHENTICATION & SECURITY
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Multiple Auth Methods:</strong> Support for various authentication mechanisms</li>
+                        <li class="feature-item"><strong>Tool Permissions:</strong> Granular control over tool access</li>
+                        <li class="feature-item"><strong>Secure API Integration:</strong> Direct connection to Anthropic's APIs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Version 0.2.x Series -->
+            <div class="version-card" data-version="0.2.x" data-tags="technical">
+                <div class="version-header">
+                    <div>
+                        <div class="version-number">v0.2.x Series</div>
+                        <div class="version-date">March - May 2025</div>
+                    </div>
+                    <div class="status-badge status-preview">RESEARCH PREVIEW</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-plus"></i>
+                        NEW COMMANDS & FEATURES
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Custom Slash Commands:</strong> Markdown files in .claude/commands/ appear as custom commands</li>
+                        <li class="feature-item"><strong>Release Notes Command:</strong> New /release-notes command for viewing updates</li>
+                        <li class="feature-item"><strong>Thinking Mode:</strong> Enhanced reasoning with think, think harder, and ultrathink commands</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section collapsed" id="section-02x">
+                    <div class="feature-title">
+                        <i class="fas fa-gear"></i>
+                        CONFIGURATION & UX
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Multi-value Config:</strong> Commands accept comma or space-separated values</li>
+                        <li class="feature-item"><strong>MCP Integration:</strong> Interactive setup wizard and Claude Desktop import</li>
+                        <li class="feature-item"><strong>Vim Bindings:</strong> Enable vim-style keybindings</li>
+                        <li class="feature-item"><strong>Streaming Output:</strong> Real-time response streaming</li>
+                    </ul>
+                </div>
+                <button class="expand-btn" onclick="toggleSection('section-02x', this)">SHOW MORE</button>
+            </div>
+
+            <!-- Version 0.2.9 -->
+            <div class="version-card" data-version="0.2.9" data-tags="major">
+                <div class="version-header">
+                    <div>
+                        <div class="version-number">v0.2.9</div>
+                        <div class="version-date">February 24, 2025</div>
+                    </div>
+                    <div class="status-badge status-preview">RESEARCH PREVIEW LAUNCH</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-star"></i>
+                        INITIAL RELEASE
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>Agentic Command Line Tool:</strong> First public release of Claude Code</li>
+                        <li class="feature-item"><strong>File Editing:</strong> Edit files across entire codebase</li>
+                        <li class="feature-item"><strong>Code Analysis:</strong> Architecture analysis and explanations</li>
+                        <li class="feature-item"><strong>Git Integration:</strong> History searching, merge conflicts, commits, and PRs</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">
+                        <i class="fas fa-download"></i>
+                        INSTALLATION & SETUP
+                    </div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>NPM Package:</strong> Install via npm install -g @anthropic-ai/claude-code</li>
+                        <li class="feature-item"><strong>Simple Execution:</strong> Run with claude command</li>
+                        <li class="feature-item"><strong>No Additional Setup:</strong> Direct terminal integration</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="webring">
+            <span class="blink-fast">🌐</span> PART OF THE CODING WEBRING <span class="blink-fast">🌐</span>
+            [ PREV ] [ RANDOM ] [ NEXT ] [ LIST ]
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Visitor counter simulation
+        function updateVisitorCount() {
+            const count = Math.floor(Math.random() * 9999) + 1000;
+            document.getElementById('visitorCount').textContent = count.toString().padStart(6, '0');
+            document.getElementById('visitorCount2').textContent = count;
+        }
+        
+        // Update visitor count every 10 seconds for that authentic 90s feel
+        setInterval(updateVisitorCount, 10000);
+
+        // Statistics calculation
+        function updateStats() {
+            const versionCards = document.querySelectorAll('.version-card');
+            const totalVersions = versionCards.length;
+            const totalFeatures = document.querySelectorAll('.feature-item').length;
+            
+            document.getElementById('totalVersions').textContent = totalVersions;
+            document.getElementById('totalFeatures').textContent = totalFeatures;
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const versionCards = document.querySelectorAll('.version-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            versionCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                
+                versionCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const tags = card.dataset.tags;
+                        if (tags && tags.includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Expand/Collapse functionality
+        function toggleSection(sectionId, button) {
+            const section = document.getElementById(sectionId);
+            if (section.classList.contains('collapsed')) {
+                section.classList.remove('collapsed');
+                button.textContent = 'SHOW LESS';
+            } else {
+                section.classList.add('collapsed');
+                button.textContent = 'SHOW MORE';
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            updateVisitorCount();
+        });
+
+        // Add smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        versionCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add some random 90s sound effects (visual only)
+        function addRandomEffect() {
+            const effects = ['💫', '✨', '⭐', '🌟', '💥', '🔥'];
+            const effect = effects[Math.floor(Math.random() * effects.length)];
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            const element = document.createElement('div');
+            element.textContent = effect;
+            element.style.position = 'fixed';
+            element.style.left = x + 'px';
+            element.style.top = y + 'px';
+            element.style.fontSize = '20px';
+            element.style.pointerEvents = 'none';
+            element.style.zIndex = '9999';
+            element.style.animation = 'bounce 2s ease-out forwards';
+            
+            document.body.appendChild(element);
+            
+            setTimeout(() => {
+                element.remove();
+            }, 2000);
+        }
+        
+        // Add random effects every 5 seconds
+        setInterval(addRandomEffect, 5000);
+    </script>
+</body>
+</html>

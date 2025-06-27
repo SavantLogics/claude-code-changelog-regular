@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAUDE CODE CHANGELOG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #000000;
+            color: #ffffff;
+            padding: 20px;
+            text-align: left;
+            border-bottom: 4px solid #000000;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .search-filter {
+            background: #f0f0f0;
+            padding: 20px;
+            border-bottom: 2px solid #000000;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: #ffffff;
+            border: 2px solid #000000;
+        }
+
+        .filter-buttons {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .filter-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .changelog-timeline {
+            padding: 0;
+        }
+
+        .version-card {
+            background: #ffffff;
+            border: 4px solid #000000;
+            margin: 0;
+            padding: 20px;
+            border-bottom: none;
+        }
+
+        .version-card:last-child {
+            border-bottom: 4px solid #000000;
+        }
+
+        .version-header {
+            display: block;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+
+        .version-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000000;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .version-date {
+            color: #000000;
+            font-size: 12px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border: 2px solid #000000;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-ga {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .status-preview {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .feature-section {
+            margin-bottom: 20px;
+            border: 1px solid #000000;
+            padding: 15px;
+        }
+
+        .feature-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 5px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #cccccc;
+            font-size: 12px;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-item strong {
+            color: #000000;
+            text-transform: uppercase;
+        }
+
+        .expand-btn {
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .expand-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .collapsed {
+            max-height: 150px;
+            overflow: hidden;
+        }
+
+        .stats-container {
+            display: block;
+            background: #000000;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        .stat-card {
+            display: inline-block;
+            padding: 15px;
+            border: 2px solid #ffffff;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            display: block;
+        }
+
+        .stat-label {
+            color: #ffffff;
+            margin-top: 5px;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 16px;
+            opacity: 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            line-height: 36px;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .stat-card {
+                display: block;
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CLAUDE CODE CHANGELOG</h1>
+            <p>TRACK ALL UPDATES AND IMPROVEMENTS TO ANTHROPIC'S AGENTIC COMMAND LINE CODING TOOL</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVersions">0</div>
+                <div class="stat-label">TOTAL VERSIONS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalFeatures">0</div>
+                <div class="stat-label">FEATURES ADDED</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="latestVersion">V1.0.27</div>
+                <div class="stat-label">LATEST VERSION</div>
+            </div>
+        </div>
+
+        <div class="search-filter">
+            <input type="text" class="search-input" id="searchInput" placeholder="SEARCH CHANGELOG (VERSION, FEATURE, DATE)...">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">ALL VERSIONS</button>
+                <button class="filter-btn" data-filter="major">MAJOR FEATURES</button>
+                <button class="filter-btn" data-filter="technical">TECHNICAL</button>
+                <button class="filter-btn" data-filter="security">SECURITY</button>
+                <button class="filter-btn" data-filter="latest">LATEST ONLY</button>
+            </div>
+        </div>
+
+        <div class="changelog-timeline" id="changelogTimeline">
+            
+            <!-- Version 1.0.27 -->
+            <div class="version-card" data-version="1.0.27" data-tags="major technical security latest">
+                <div class="version-header">
+                    <div class="version-number">V1.0.27</div>
+                    <div class="version-date">JUNE 2025</div>
+                    <div class="status-badge status-ga">GENERALLY AVAILABLE</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">MAJOR FEATURES</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>SONNET 4 & OPUS 4 MODELS:</strong> ACCESS TO THE LATEST CLAUDE MODELS FOR ENHANCED CODING CAPABILITIES</li>
+                        <li class="feature-item"><strong>CLAUDE PRO & MAX INTEGRATION:</strong> FULL SUPPORT FOR PRO AND MAX SUBSCRIPTION PLANS</li>
+                        <li class="feature-item"><strong>SDK RELEASE:</strong> TYPESCRIPT AND PYTHON SDKS NOW AVAILABLE FOR DEVELOPERS</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">CORE FEATURES</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>TODO LIST MANAGEMENT:</strong> CLAUDE CAN CREATE AND TRACK TODO LISTS DURING COMPLEX TASKS</li>
+                        <li class="feature-item"><strong>CONVERSATION RESUMPTION:</strong> RESUME PREVIOUS CODING SESSIONS SEAMLESSLY</li>
+                        <li class="feature-item"><strong>WEB SEARCH INTEGRATION:</strong> SEARCH THE WEB FOR DOCUMENTATION AND SOLUTIONS</li>
+                        <li class="feature-item"><strong>IMAGE SUPPORT:</strong> PASTE AND DRAG IMAGES DIRECTLY INTO CONVERSATIONS</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section collapsed" id="section-1027">
+                    <div class="feature-title">TECHNICAL IMPROVEMENTS</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>MCP SERVER ENHANCEMENTS:</strong> SSE AND HTTP TRANSPORT SUPPORT WITH REAL-TIME COMMUNICATION</li>
+                        <li class="feature-item"><strong>OAUTH 2.0 AUTHENTICATION:</strong> ENHANCED SECURITY VIA /MCP COMMAND</li>
+                        <li class="feature-item"><strong>PERFORMANCE OPTIMIZATIONS:</strong> FASTER STARTUP TIMES AND IMPROVED RESPONSIVENESS</li>
+                        <li class="feature-item"><strong>ENHANCED ERROR HANDLING:</strong> MORE ROBUST ERROR DETECTION AND RECOVERY</li>
+                    </ul>
+                </div>
+                <button class="expand-btn" onclick="toggleSection('section-1027', this)">SHOW MORE</button>
+            </div>
+
+            <!-- Version 1.0.0 -->
+            <div class="version-card" data-version="1.0.0" data-tags="major technical security">
+                <div class="version-header">
+                    <div class="version-number">V1.0.0</div>
+                    <div class="version-date">JUNE 11, 2025</div>
+                    <div class="status-badge status-ga">GA LAUNCH</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">MILESTONE RELEASE</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>OFFICIAL GA RELEASE:</strong> TRANSITION FROM RESEARCH PREVIEW TO GENERALLY AVAILABLE</li>
+                        <li class="feature-item"><strong>SDK LAUNCH:</strong> TYPESCRIPT AND PYTHON SDKS FOR DEVELOPERS</li>
+                        <li class="feature-item"><strong>ENTERPRISE READY:</strong> PRODUCTION-READY STABILITY AND SUPPORT</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">AUTHENTICATION & SECURITY</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>MULTIPLE AUTH METHODS:</strong> SUPPORT FOR VARIOUS AUTHENTICATION MECHANISMS</li>
+                        <li class="feature-item"><strong>TOOL PERMISSIONS:</strong> GRANULAR CONTROL OVER TOOL ACCESS</li>
+                        <li class="feature-item"><strong>SECURE API INTEGRATION:</strong> DIRECT CONNECTION TO ANTHROPIC'S APIS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Version 0.2.x Series -->
+            <div class="version-card" data-version="0.2.x" data-tags="technical">
+                <div class="version-header">
+                    <div class="version-number">V0.2.X SERIES</div>
+                    <div class="version-date">MARCH - MAY 2025</div>
+                    <div class="status-badge status-preview">RESEARCH PREVIEW</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">NEW COMMANDS & FEATURES</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>CUSTOM SLASH COMMANDS:</strong> MARKDOWN FILES IN .CLAUDE/COMMANDS/ APPEAR AS CUSTOM COMMANDS</li>
+                        <li class="feature-item"><strong>RELEASE NOTES COMMAND:</strong> NEW /RELEASE-NOTES COMMAND FOR VIEWING UPDATES</li>
+                        <li class="feature-item"><strong>THINKING MODE:</strong> ENHANCED REASONING WITH THINK, THINK HARDER, AND ULTRATHINK COMMANDS</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section collapsed" id="section-02x">
+                    <div class="feature-title">CONFIGURATION & UX</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>MULTI-VALUE CONFIG:</strong> COMMANDS ACCEPT COMMA OR SPACE-SEPARATED VALUES</li>
+                        <li class="feature-item"><strong>MCP INTEGRATION:</strong> INTERACTIVE SETUP WIZARD AND CLAUDE DESKTOP IMPORT</li>
+                        <li class="feature-item"><strong>VIM BINDINGS:</strong> ENABLE VIM-STYLE KEYBINDINGS</li>
+                        <li class="feature-item"><strong>STREAMING OUTPUT:</strong> REAL-TIME RESPONSE STREAMING</li>
+                    </ul>
+                </div>
+                <button class="expand-btn" onclick="toggleSection('section-02x', this)">SHOW MORE</button>
+            </div>
+
+            <!-- Version 0.2.9 -->
+            <div class="version-card" data-version="0.2.9" data-tags="major">
+                <div class="version-header">
+                    <div class="version-number">V0.2.9</div>
+                    <div class="version-date">FEBRUARY 24, 2025</div>
+                    <div class="status-badge status-preview">RESEARCH PREVIEW LAUNCH</div>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">INITIAL RELEASE</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>AGENTIC COMMAND LINE TOOL:</strong> FIRST PUBLIC RELEASE OF CLAUDE CODE</li>
+                        <li class="feature-item"><strong>FILE EDITING:</strong> EDIT FILES ACROSS ENTIRE CODEBASE</li>
+                        <li class="feature-item"><strong>CODE ANALYSIS:</strong> ARCHITECTURE ANALYSIS AND EXPLANATIONS</li>
+                        <li class="feature-item"><strong>GIT INTEGRATION:</strong> HISTORY SEARCHING, MERGE CONFLICTS, COMMITS, AND PRS</li>
+                    </ul>
+                </div>
+
+                <div class="feature-section">
+                    <div class="feature-title">INSTALLATION & SETUP</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><strong>NPM PACKAGE:</strong> INSTALL VIA NPM INSTALL -G @ANTHROPIC-AI/CLAUDE-CODE</li>
+                        <li class="feature-item"><strong>SIMPLE EXECUTION:</strong> RUN WITH CLAUDE COMMAND</li>
+                        <li class="feature-item"><strong>NO ADDITIONAL SETUP:</strong> DIRECT TERMINAL INTEGRATION</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">^</button>
+
+    <script>
+        // Statistics calculation
+        function updateStats() {
+            const versionCards = document.querySelectorAll('.version-card');
+            const totalVersions = versionCards.length;
+            const totalFeatures = document.querySelectorAll('.feature-item').length;
+            
+            document.getElementById('totalVersions').textContent = totalVersions;
+            document.getElementById('totalFeatures').textContent = totalFeatures;
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const versionCards = document.querySelectorAll('.version-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            versionCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                
+                versionCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const tags = card.dataset.tags;
+                        if (tags && tags.includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Expand/Collapse functionality
+        function toggleSection(sectionId, button) {
+            const section = document.getElementById(sectionId);
+            if (section.classList.contains('collapsed')) {
+                section.classList.remove('collapsed');
+                button.textContent = 'SHOW LESS';
+            } else {
+                section.classList.add('collapsed');
+                button.textContent = 'SHOW MORE';
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+        });
+
+        // Add smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
